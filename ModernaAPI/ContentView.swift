@@ -8,17 +8,39 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @StateObject var apistuff = ChuckAPI()
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Text(apistuff.joketext)
         }
         .padding()
+        .onAppear() {
+            Task {
+                await apistuff.loadapi()
+            }
+        }
     }
+    
+    
 }
 
 #Preview {
     ContentView()
 }
+
+
+/*
+ 
+ do {
+     var apitext = try String(contentsOf: url)
+     
+     print(apitext)
+     
+     joketext = apitext
+ } catch {
+     print("Det gick fel")
+ }
+ 
+ */
